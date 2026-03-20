@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smaransworld — Links</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #08183A;
+    --navy2: #0C2252;
+    --gold: #D4AF37;
+    --gold2: #F0CC6A;
+    --white: #FFFFFF;
+    --muted: rgba(255,255,255,0.55);
+    --card-bg: rgba(255,255,255,0.06);
+    --card-hover: rgba(255,255,255,0.11);
+    --card-border: rgba(212,175,55,0.25);
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* Animated star field */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: twinkle var(--dur) ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: var(--op); transform: scale(1); }
+  }
+
+  /* Gold glow orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(80px);
+    opacity: 0.15;
+  }
+  .orb-1 { width: 400px; height: 400px; background: var(--gold); top: -100px; left: -100px; }
+  .orb-2 { width: 300px; height: 300px; background: #1a4fa0; bottom: -80px; right: -80px; }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* Profile section */
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .avatar-wrap {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 16px;
+  }
+  .avatar-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(var(--gold), var(--gold2), var(--gold), var(--gold2), var(--gold));
+    animation: spin 6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .avatar-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--navy2);
+    border: 3px solid var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--gold);
+    overflow: hidden;
+  }
+  .avatar-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .profile-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .profile-name span { color: var(--gold); }
+
+  .profile-tag {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--gold2);
+    letter-spacing: 0.03em;
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    align-self: flex-start;
+    margin: 24px 0 10px;
+    padding-left: 2px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  /* Link cards */
+  .links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--white);
+    transition: all 0.22s ease;
+    animation: fadeUp 0.6s ease both;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .link-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212,175,55,0.08), transparent);
+    opacity: 0;
+    transition: opacity 0.22s;
+  }
+  .link-card:hover {
+    background: var(--card-hover);
+    border-color: rgba(212,175,55,0.5);
+    transform: translateY(-2px);
+  }
+  .link-card:hover::before { opacity: 1; }
+  .link-card:active { transform: translateY(0) scale(0.98); }
+
+  .link-card.featured {
+    background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+    border-color: rgba(212,175,55,0.5);
+  }
+  .link-card.featured .link-icon { background: var(--gold); color: var(--navy); }
+
+  .link-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .link-card:hover .link-icon { transform: scale(1.1); }
+
+  .link-body { flex: 1; }
+  .link-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+  .link-sub {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .link-arrow {
+    font-size: 16px;
+    color: var(--gold);
+    opacity: 0.7;
+    transition: all 0.2s;
+  }
+  .link-card:hover .link-arrow { opacity: 1; transform: translateX(3px); }
+
+  /* New badge */
+  .new-badge {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 2px 7px;
+    border-radius: 6px;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .stat-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gold);
+  }
+  .stat-lbl {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    animation: fadeUp 0.6s ease both;
+    line-height: 1.7;
+  }
+  .footer span { color: var(--gold); }
+
+  /* Divider */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+    margin: 8px 0;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Stagger delays */
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.2s; }
+  .d3 { animation-delay: 0.3s; }
+  .d4 { animation-delay: 0.4s; }
+  .d5 { animation-delay: 0.5s; }
+  .d6 { animation-delay: 0.6s; }
+  .d7 { animation-delay: 0.7s; }
+  .d8 { animation-delay: 0.8s; }
+</style>
+</head>
+<body>
+
+<!-- Star field -->
+<div class="stars" id="stars"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="container">
+
+  <!-- Profile -->
+  <div class="profile">
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar-inner">SW</div>
+    </div>
+    <div class="profile-name">Smaran's<span>World</span></div>
+    <div class="profile-tag">12-yr-old Builder · Hyderabad 🇮🇳</div>
+    <div class="badges">
+      <span class="badge">🦾 Robotics</span>
+      <span class="badge">🧪 Science</span>
+      <span class="badge">🔧 DIY</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row d1">
+    <div class="stat-box">
+      <div class="stat-num">375+</div>
+      <div class="stat-lbl">Videos</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">570K</div>
+      <div class="stat-lbl">Views</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">2.2K</div>
+      <div class="stat-lbl">Subscribers</div>
+    </div>
+  </div>
+
+  <!-- Main links -->
+  <div class="section-label d2">Watch & Follow</div>
+  <div class="links">
+
+    <a class="link-card featured d2" href="https://www.youtube.com/@Smaransworld" target="_blank">
+      <div class="link-icon">▶</div>
+      <div class="link-body">
+        <div class="link-title">YouTube Channel</div>
+        <div class="link-sub">Robotics builds, science & DIY</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+    <a class="link-card d3" href="https://www.instagram.com/smaransworld/" target="_blank">
+      <div class="link-icon">📸</div>
+      <div class="link-body">
+        <div class="link-title">Instagram</div>
+        <div class="link-sub">Behind the scenes & quick builds</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+  </div>
+
+  <!-- Latest -->
+  <div class="section-label d4">Latest Build</div>
+  <div class="links">
+
+    <a class="link-card d4" href="https://www.youtube.com/shorts/EMCz41eA8io" target="_blank">
+      <div class="link-icon">🤖</div>
+      <div class="link-body">
+        <div class="link-title">Color Sorting Machine</div>
+        <div class="link-sub">Sorts by color automatically 🤯</div>
+      </div>
+      <span class="new-badge">New</span>
+      <div class="link-arrow">→</div>
+    </a>
+
+    <a class="link-card d5" href="https://www.youtube.com/@Smaransworld" target="_blank">
+      <div class="link-icon">🦾</div>
+      <div class="link-body">
+        <div class="link-title">Robotic Arm Build</div>
+        <div class="link-sub">Built from scratch at age 12</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+  </div>
+
+  <!-- Shop / collab -->
+  <div class="section-label d6">Build Yours</div>
+  <div class="links">
+
+    <a class="link-card d6" href="https://www.acebott.com" target="_blank">
+      <div class="link-icon">📦</div>
+      <div class="link-body">
+        <div class="link-title">ACEBOTT Kits</div>
+        <div class="link-sub">The kits Smaran uses to build</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+  </div>
+
+  <div class="divider" style="margin-top:32px;"></div>
+
+  <!-- Footer -->
+  <div class="footer d8">
+    Made with ❤️ by <span>Smaransworld</span><br>
+    12-year-old builder from Hyderabad, India 🇮🇳
+  </div>
+
+</div>
+
+<script>
+// Generate star field
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 80; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  const size = Math.random() * 2.5 + 1;
+  star.style.cssText = `
+    width: ${size}px;
+    height: ${size}px;
+    top: ${Math.random() * 100}%;
+    left: ${Math.random() * 100}%;
+    --dur: ${Math.random() * 3 + 2}s;
+    --op: ${Math.random() * 0.5 + 0.2};
+    animation-delay: ${Math.random() * 4}s;
+  `;
+  starsEl.appendChild(star);
+}
+</script>
+</body>
+</html>
